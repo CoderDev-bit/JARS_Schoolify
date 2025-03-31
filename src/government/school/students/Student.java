@@ -1,9 +1,7 @@
 package government.school.students;
 
 import government.Person;
-import government.school.Course;
-import government.school.CourseSection;
-import government.school.Timetable;
+import government.school.timetable.Timetable;
 import government.school.util.Auth;
 
 import java.io.*;
@@ -82,6 +80,10 @@ public class Student extends Person implements Serializable {
 
 
     /* GETTERS */
+    public String getPASSWORD() {
+        return this.PASSWORD;
+    }
+
     public static int getCount() {
         return students.size();
     }
@@ -108,6 +110,10 @@ public class Student extends Person implements Serializable {
 
     public int getVolunteerHoursCompleted(){
         return this.intVolunteerHoursCompleted;
+    }
+
+    public static ArrayList<Student> getAllStudents() {
+        return students; // This method returns the list of all students
     }
 
     /* LOGIC METHODS */ //suspended, vacation, graduated

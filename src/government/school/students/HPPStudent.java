@@ -1,6 +1,6 @@
 package government.school.students;
 
-import government.school.Timetable;
+import government.school.timetable.Timetable;
 
 public class HPPStudent extends Student {
 

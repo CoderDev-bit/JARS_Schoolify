@@ -1,11 +1,10 @@
 package schoolify;
-import government.Person;
-import government.school.*;
+import government.school.students.*;
 import javax.swing.*;
-import java.awt.CardLayout;
 
 public class AdministratorEditandViewStudentRecords extends JPanel {
 
+    // GUI components
     JLabel lblAdministratorViewEditEnterStudentID = new JLabel("Enter Student ID: ");
     JLabel lblAdministratorViewEditStudentName = new JLabel("Name: ");
     JLabel lblAdministratorViewEditStudentAge = new JLabel("Age: ");
@@ -16,21 +15,23 @@ public class AdministratorEditandViewStudentRecords extends JPanel {
     JLabel lblAdministratorViewEditStudentVolunteerHours = new JLabel("Volunteer Hours: ");
     JLabel lblAdministratorViewEditStudentGraduate = new JLabel("Graduate: ");
 
-    JTextField txtAdministratorViewEditStudentID = new JTextField();
-    JTextField txtAdministratorViewEditStudentName = new JTextField();
-    JTextField txtAdministratorViewEditStudentAge = new JTextField();
-    JTextField txtAdministratorViewEditStudentAverageGrade = new JTextField();
-    JTextField txtAdministratorViewEditStudentCreditsEarned = new JTextField();
-    JTextField txtAdministratorViewEditStudentAbsences = new JTextField();
-    JTextField txtAdministratorViewEditStudentLates = new JTextField();
-    JTextField txtAdministratorViewEditStudentVolunteerHours = new JTextField();
-    JTextField txtAdministratorViewEditStudentGraduate = new JTextField();
+    public JTextField txtAdministratorViewEditStudentID = new JTextField();
+    public JTextField txtAdministratorViewEditStudentName = new JTextField();
+    public JTextField txtAdministratorViewEditStudentAge = new JTextField();
+    public JTextField txtAdministratorViewEditStudentAverageGrade = new JTextField();
+    public JTextField txtAdministratorViewEditStudentCreditsEarned = new JTextField();
+    public JTextField txtAdministratorViewEditStudentAbsences = new JTextField();
+    public JTextField txtAdministratorViewEditStudentLates = new JTextField();
+    public JTextField txtAdministratorViewEditStudentVolunteerHours = new JTextField();
+    public JTextField txtAdministratorViewEditStudentGraduate = new JTextField();
 
-    JButton btnAdministratorEnterStudentID = new JButton("Enter");
-    JButton btnAdministratorSaveStudentChanges = new JButton("Save");
-    JButton btnAdministratorUndoStudentChanges = new JButton("Undo");
+    public JButton btnAdministratorEnterStudentID = new JButton("Enter");
+    public JButton btnAdministratorSaveStudentChanges = new JButton("Save");
+    public JButton btnAdministratorUndoStudentChanges = new JButton("Undo");
 
-    private Student student;
+    private Student student;  // Holds the student object data
+
+    // Original values for the undo feature
     private String ogName;
     private int ogAge;
     private int ogAvgGrade;
@@ -40,21 +41,30 @@ public class AdministratorEditandViewStudentRecords extends JPanel {
     private int ogVolunteerHours;
     private boolean ogGraduated;
 
+    // Constructor that accepts the Student object as a parameter
     public AdministratorEditandViewStudentRecords(Student student) {
         this.student = student;
 
+        // Set original values from the student object
         ogName = student.getName();
         ogAge = student.getAge();
-        ogAvgGrade = student.getGPA();
+        ogAvgGrade = (int) student.getGPA();
         ogCreditsEarned = student.getCreditsEarned();
-        ogAbsences = student.getDaysAbsent();
-        ogLates = student.getDaysLate();
-        ogVolunteerHours = student.getVolunteerHours();
-        ogGraduated = student.getGraduate();
+        ogVolunteerHours = student.getVolunteerHoursCompleted();
+        ogGraduated = student.getStatus()[1];
 
+        // Initialize the GUI components
+        initializeGUI();
+
+        // Update the GUI with real data from the Student object
+        updateGUI();
+    }
+
+    // Method to initialize all GUI components
+    public void initializeGUI() {
         setLayout(null);
 
-        // Set bounds
+        // Set bounds for labels and text fields
         lblAdministratorViewEditEnterStudentID.setBounds(20, 20, 150, 50);
         txtAdministratorViewEditStudentID.setBounds(180, 35, 150, 25);
 
@@ -83,10 +93,10 @@ public class AdministratorEditandViewStudentRecords extends JPanel {
         txtAdministratorViewEditStudentGraduate.setBounds(180, 435, 150, 25);
 
         btnAdministratorEnterStudentID.setBounds(350, 35, 100, 25);
-        btnAdministratorSaveChanges.setBounds(350, 435, 150, 30);
-        btnAdministratorUndoChanges.setBounds(350, 475, 150, 30);
+        btnAdministratorSaveStudentChanges.setBounds(350, 435, 150, 30);
+        btnAdministratorUndoStudentChanges.setBounds(350, 475, 150, 30);
 
-        // Set editable
+        // Set editable fields
         txtAdministratorViewEditStudentID.setEditable(true);
         txtAdministratorViewEditStudentName.setEditable(true);
         txtAdministratorViewEditStudentAge.setEditable(true);
@@ -97,56 +107,7 @@ public class AdministratorEditandViewStudentRecords extends JPanel {
         txtAdministratorViewEditStudentVolunteerHours.setEditable(true);
         txtAdministratorViewEditStudentGraduate.setEditable(true);
 
-        // Set data from Student object
-        txtAdministratorViewEditStudentID.setText(String.valueOf(student.getStudentID()));
-        txtAdministratorViewEditStudentName.setText(student.getName());
-        txtAdministratorViewEditStudentAge.setText(String.valueOf(student.getAge()));
-        txtAdministratorViewEditStudentAverageGrade.setText(String.valueOf(student.getGPA()));
-        txtAdministratorViewEditStudentCreditsEarned.setText(String.valueOf(student.getCreditsEarned()));
-        txtAdministratorViewEditStudentAbsences.setText(String.valueOf(student.getDaysAbsent()));
-        txtAdministratorViewEditStudentLates.setText(String.valueOf(student.getDaysLate()));
-        txtAdministratorViewEditStudentVolunteerHours.setText(String.valueOf(student.getVolunteerHoursCompleted()));
-        txtAdministratorViewEditStudentGraduate.setText(student.getStatus()[1] ? "Yes" : "No");
-
-        //Save button action
-        btnAdministratorSaveStudentChanges.addActionListener(e -> {
-
-            // Save button action
-            try {
-                student.setStudentName(txtAdministratorViewEditStudentName.getText());
-                student.setAge(Integer.parseInt(txtAdministratorViewEditStudentAge.getText()));
-                student.setGPA(Double.parseDouble(txtAdministratorViewEditStudentAverageGrade.getText()));
-                student.setCreditsEarned(Integer.parseInt(txtAdministratorViewEditStudentCreditsEarned.getText()));
-                student.setDaysAbsent(Integer.parseInt(txtAdministratorViewEditStudentAbsences.getText()));
-                student.setDaysLate(Integer.parseInt(txtAdministratorViewEditStudentLates.getText()));
-                student.setVolunteerHours(Integer.parseInt(txtAdministratorViewEditStudentVolunteerHours.getText()));
-                student.setIsGraduated(txtAdministratorViewEditStudentGraduate.getText());
-
-
-                JOptionPane.showMessageDialog(this, "Changes Saved");
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Error saving changes: " + e.getMessage());
-            }
-        });
-
-        // Undo button action
-        btnAdministratorUndoStudentChanges.addActionListener(e -> {
-
-            txtAdministratorViewEditStudentName.setText(ogName);
-            txtAdministratorViewEditStudentAge.setText(String.valueOf(ogAge));
-            txtAdministratorViewEditStudentAverageGrade.setText(String.valueOf(ogAvgGrade));
-            txtAdministratorViewEditStudentCreditsEarned.setText(String.valueOf(ogCreditsEarned));
-            txtAdministratorViewEditStudentAbsences.setText(String.valueOf(ogAbsences));
-            txtAdministratorViewEditStudentLates.setText(String.valueOf(ogLates));
-            txtAdministratorViewEditStudentVolunteerHours.setText(String.valueOf(ogVolunteerHours));
-            txtAdministratorViewEditStudentGraduate.setText(ogGraduated ? "Yes" : "No");
-
-            JOptionPane.showMessageDialog(this, "Changes reverted");
-
-        });
-
-
-        // Add to panel
+        // Add all components to the panel
         add(lblAdministratorViewEditEnterStudentID);
         add(txtAdministratorViewEditStudentID);
         add(lblAdministratorViewEditStudentName);
@@ -168,5 +129,45 @@ public class AdministratorEditandViewStudentRecords extends JPanel {
         add(btnAdministratorEnterStudentID);
         add(btnAdministratorSaveStudentChanges);
         add(btnAdministratorUndoStudentChanges);
+    }
+
+    // Method to update the GUI with the student data
+    public void updateGUI() {
+        // Set text fields with the student data
+        txtAdministratorViewEditStudentID.setText(String.valueOf(student.getID()));
+        txtAdministratorViewEditStudentName.setText(student.getName());
+        txtAdministratorViewEditStudentAge.setText(String.valueOf(student.getAge()));
+        txtAdministratorViewEditStudentAverageGrade.setText(String.valueOf(student.getGPA()));
+        txtAdministratorViewEditStudentCreditsEarned.setText(String.valueOf(student.getCreditsEarned()));
+        txtAdministratorViewEditStudentVolunteerHours.setText(String.valueOf(student.getVolunteerHoursCompleted()));
+        txtAdministratorViewEditStudentGraduate.setText(student.getStatus()[1] ? "Yes" : "No");
+    }
+
+    // Save button action
+    public void saveStudentChanges() {
+        try {
+            student.setName(txtAdministratorViewEditStudentName.getText());
+            student.setAge(Integer.parseInt(txtAdministratorViewEditStudentAge.getText()));
+            student.setVolunteerHours(Integer.parseInt(txtAdministratorViewEditStudentVolunteerHours.getText()));
+
+            JOptionPane.showMessageDialog(this, "Changes Saved");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error saving changes: " + ex.getMessage());
+        }
+    }
+
+    // Undo button action
+    public void undoStudentChanges() {
+        // Revert the text fields to original values
+        txtAdministratorViewEditStudentName.setText(ogName);
+        txtAdministratorViewEditStudentAge.setText(String.valueOf(ogAge));
+        txtAdministratorViewEditStudentAverageGrade.setText(String.valueOf(ogAvgGrade));
+        txtAdministratorViewEditStudentCreditsEarned.setText(String.valueOf(ogCreditsEarned));
+        txtAdministratorViewEditStudentAbsences.setText(String.valueOf(ogAbsences));
+        txtAdministratorViewEditStudentLates.setText(String.valueOf(ogLates));
+        txtAdministratorViewEditStudentVolunteerHours.setText(String.valueOf(ogVolunteerHours));
+        txtAdministratorViewEditStudentGraduate.setText(ogGraduated ? "Yes" : "No");
+
+        JOptionPane.showMessageDialog(this, "Changes reverted");
     }
 }

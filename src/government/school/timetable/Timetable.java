@@ -1,9 +1,6 @@
-package government.school;
+package government.school.timetable;
 
 import government.school.students.Student;
-
-import java.sql.Time;
-import java.util.Arrays;
 
 public class Timetable {
 

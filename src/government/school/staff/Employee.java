@@ -44,6 +44,10 @@ public abstract class Employee extends Person implements Cloneable {
         return this.EMPLOYEE_ID;
     }
 
+    public String getPASSWORD() {
+        return strPassword;
+    }
+
     public String getDepartment(){
         return this.strDepartment;
     }
@@ -63,6 +67,11 @@ public abstract class Employee extends Person implements Cloneable {
     public boolean[] getStatus(){
         return this.blnStatus.clone();
     }
+
+    public static ArrayList<Employee> getAllEmployees() {
+        return employees; // This method returns the list of all students
+    }
+
 
 
 

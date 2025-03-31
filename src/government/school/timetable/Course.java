@@ -1,8 +1,4 @@
-package government.school;
-
-import government.school.staff.Teacher;
-
-import java.util.ArrayList;
+package government.school.timetable;
 
 public abstract class Course {
     // Fields

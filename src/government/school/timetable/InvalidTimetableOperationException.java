@@ -1,4 +1,4 @@
-package government.school;
+package government.school.timetable;
 
 // Custom exception for full course
 class InvalidTimetableOperationException extends RuntimeException {

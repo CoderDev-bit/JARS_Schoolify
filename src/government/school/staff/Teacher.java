@@ -1,7 +1,6 @@
 package government.school.staff;
-import government.Person;
-import government.school.Course;
-import government.school.Timetable;
+import government.school.timetable.Course;
+import government.school.timetable.Timetable;
 
 import java.util.ArrayList;
 

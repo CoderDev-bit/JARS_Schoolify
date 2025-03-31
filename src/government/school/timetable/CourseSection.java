@@ -1,11 +1,10 @@
-package government.school;
+package government.school.timetable;
 
 import government.school.staff.Teacher;
 import government.school.students.Student;
 import government.school.util.ArrayMap;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CourseSection extends Course {
 
