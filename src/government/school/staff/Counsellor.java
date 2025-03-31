@@ -6,10 +6,10 @@ public class Counsellor extends Employee {
     private String strCounsellorAlpha;
 
     // Constructor for Consellor Class
-    public Counsellor(int intAge, String strName, String[] shiftInterval,
+    public Counsellor(int intAge, String strName, String strPassword, String strDepartment, String[] shiftInterval,
                       int intYearsEmployed, double dblAnnualSalary, boolean[] blnStatus,
                       String strCounsellingCertification, String strCounsellorAlpha){
-        super(intAge, strName, "Guidance", shiftInterval, intYearsEmployed, dblAnnualSalary, blnStatus);
+        super(intAge, strName, strPassword, strDepartment, shiftInterval, intYearsEmployed, dblAnnualSalary, blnStatus);
         setCounsellingCertification(strCounsellingCertification);
         setCounsellorAlpha(strCounsellorAlpha);
     }
