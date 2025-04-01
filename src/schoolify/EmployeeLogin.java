@@ -1,6 +1,4 @@
 package schoolify;
-import government.Person;
-import government.school.*;
 import javax.swing.*;
 import java.awt.CardLayout;
 
@@ -10,7 +8,8 @@ public class EmployeeLogin extends JPanel {
     JLabel lblEmployeeID = new JLabel("Enter Employee ID: ");
     JLabel lblEmployeePassword = new JLabel("Enter Password: ");
     JTextField txtEmployeeID = new JTextField();
-    JTextField txtEmployeePassword = new JTextField();
+
+    JPasswordField txtEmployeePassword = new JPasswordField(); // Use JPasswordField for password input
     JButton btnEmployeeLogin = new JButton("Login");
 
     // Constructor
@@ -41,9 +40,11 @@ public class EmployeeLogin extends JPanel {
     }
 
     // Method to update GUI (This could be used for populating data dynamically or handling logic)
-    public void updateGUI(String employeeID, String password) {
-        // Example: You could use this method to pre-populate or update the fields based on logic
-        txtEmployeeID.setText(employeeID);
-        txtEmployeePassword.setText(password);
+    public void updateGUI() {}
+
+    // Method to clear the fields when starting a new login attempt
+    public void clearFields() {
+        txtEmployeeID.setText("");          // Clear Employee ID field
+        txtEmployeePassword.setText("");    // Clear Password field
     }
 }

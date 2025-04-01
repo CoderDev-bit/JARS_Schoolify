@@ -4,7 +4,6 @@ import government.school.*;
 import javax.swing.*;
 import java.awt.CardLayout;
 
-// login panel
 public class StudentLogin extends JPanel {
     // labels
     JLabel lblStudentID = new JLabel("Enter Student ID: ");
@@ -12,7 +11,7 @@ public class StudentLogin extends JPanel {
 
     // fields
     JTextField txtStudentID = new JTextField();
-    JTextField txtStudentPassword = new JTextField();
+    JPasswordField txtStudentPassword = new JPasswordField(); // Use JPasswordField for password input
 
     // button
     JButton btnStudentLogin = new JButton("Login");

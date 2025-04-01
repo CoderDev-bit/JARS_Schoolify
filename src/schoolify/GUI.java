@@ -63,55 +63,106 @@ public class GUI {
         pnlSelectRole.btnSelectStudent.addActionListener(e -> cl.show(mainPanel, "studentLogin"));
         pnlSelectRole.btnSelectEmployee.addActionListener(e -> cl.show(mainPanel, "employeeLogin"));
 // Student login
+
         pnlStudentLogin.btnStudentLogin.addActionListener(e -> {
-            int studentID = Integer.parseInt(pnlStudentLogin.txtStudentID.getText());
-            String studentPassword = pnlStudentLogin.txtStudentPassword.getText();
-// Loop through students and find a match based on ID and password
-            for (Student s : Student.getAllStudents()) {
-                if (s.getID() == studentID && s.getPASSWORD().equals(studentPassword)) {
-// Handling student types
-                    if (s instanceof SHSMStudent) {
-                        SHSMRecords pnlSHSM = new SHSMRecords((SHSMStudent) s);
-                        mainPanel.add(pnlSHSM, "shsmPanel");
-                        cl.show(mainPanel, "shsmPanel");
-                    } else if (s instanceof HPPStudent) {
-                        HPPRecords pnlHPP = new HPPRecords((HPPStudent) s);
-                        mainPanel.add(pnlHPP, "hppPanel");
-                        cl.show(mainPanel, "hppPanel");
-                    } else {
-                        StudentRecords pnlStudent = new StudentRecords(s);
-                        mainPanel.add(pnlStudent, "studentPanel");
-                        cl.show(mainPanel, "studentPanel");
-                    }
-                    break;
+            try {
+                String studentIDText = pnlStudentLogin.txtStudentID.getText(); // Get the student ID text
+                String studentPassword = pnlStudentLogin.txtStudentPassword.getText(); // Get the student password text
+
+                // Ensure that student ID and password are not empty
+                if (studentIDText.isEmpty() || studentPassword.isEmpty()) {
+                    JOptionPane.showMessageDialog(mainFrame, "Please fill in both Student ID and Password.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Exit early if any field is empty
                 }
+
+                int studentID = Integer.parseInt(studentIDText); // Try parsing the student ID as integer
+
+                // Loop through all students and check if the ID and password match
+                boolean studentFound = false;
+                for (Student s : Student.getAllStudents()) {
+                    if (s.getID() == studentID && s.getPASSWORD().equals(studentPassword)) {
+                        // Handling student types
+                        if (s instanceof SHSMStudent) {
+                            SHSMRecords pnlSHSM = new SHSMRecords((SHSMStudent) s);
+                            mainPanel.add(pnlSHSM, "shsmPanel");
+                            cl.show(mainPanel, "shsmPanel");
+                        } else if (s instanceof HPPStudent) {
+                            HPPRecords pnlHPP = new HPPRecords((HPPStudent) s);
+                            mainPanel.add(pnlHPP, "hppPanel");
+                            cl.show(mainPanel, "hppPanel");
+                        } else {
+                            StudentRecords pnlStudent = new StudentRecords(s);
+                            mainPanel.add(pnlStudent, "studentPanel");
+                            cl.show(mainPanel, "studentPanel");
+                        }
+                        studentFound = true;
+                        break; // Exit the loop once the matching student is found
+                    }
+                }
+
+                // If no matching student is found, show an error message
+                if (!studentFound) {
+                    JOptionPane.showMessageDialog(mainFrame, "Invalid student credentials.", "Login Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            } catch (NumberFormatException ex) {
+                // Handle the case where student ID is not a valid integer
+                JOptionPane.showMessageDialog(mainFrame, "Please enter a valid integer for Student ID.", "Input Error", JOptionPane.ERROR_MESSAGE);
             }
         });
+
 // Employee login
         pnlEmployeeLogin.btnEmployeeLogin.addActionListener(e -> {
-            for (Employee emp : Employee.getAllEmployees()) {
-                if (Integer.toString(emp.getEMPLOYEE_ID()).equals(pnlEmployeeLogin.txtEmployeeID.getText()) && emp.getPASSWORD().equals(pnlEmployeeLogin.txtEmployeePassword.getText())) {
-                    if (emp instanceof Administrator) {
-                        AdministratorRecords pnlAdministrator = new AdministratorRecords((Administrator) emp, cl, mainPanel);
-                        mainPanel.add(pnlAdministrator, "administratorPanel");
-                        cl.show(mainPanel, "administratorPanel");
-                    } else if (emp instanceof Teacher) {
-                        TeacherRecords pnlTeacher = new TeacherRecords((Teacher) emp);
-                        mainPanel.add(pnlTeacher, "teacherPanel");
-                        cl.show(mainPanel, "teacherPanel");
-                    } else if (emp instanceof Counsellor) {
-                        pnlCounsellor = new CounsellorRecords((Counsellor) emp);
-                        mainPanel.add(pnlCounsellor, "counsellorPanel");
-                        cl.show(mainPanel, "counsellorPanel");
-                    } else {
-                        EmployeeRecords pnlEmployee = new EmployeeRecords(emp);
-                        mainPanel.add(pnlEmployee, "employeePanel");
-                        cl.show(mainPanel, "employeePanel");
-                    }
-                    break;
+            try {
+                String employeeIDText = pnlEmployeeLogin.txtEmployeeID.getText();
+                String employeePassword = pnlEmployeeLogin.txtEmployeePassword.getText();
+
+                // Ensure that employee ID is not empty and is a valid integer
+                if (employeeIDText.isEmpty() || employeePassword.isEmpty()) {
+                    JOptionPane.showMessageDialog(mainFrame, "Please fill in both Employee ID and Password.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Exit early if any field is empty
                 }
+
+                int employeeID = Integer.parseInt(employeeIDText); // Parse employee ID as integer
+
+                // Search for the employee
+                boolean employeeFound = false;
+                for (Employee emp : Employee.getAllEmployees()) {
+                    if (emp.getEMPLOYEE_ID() == employeeID && emp.getPASSWORD().equals(employeePassword)) {
+                        // Handle employee types and navigate to the respective panel
+                        if (emp instanceof Administrator) {
+                            AdministratorRecords pnlAdministrator = new AdministratorRecords((Administrator) emp, cl, mainPanel);
+                            mainPanel.add(pnlAdministrator, "administratorPanel");
+                            cl.show(mainPanel, "administratorPanel");
+                        } else if (emp instanceof Teacher) {
+                            TeacherRecords pnlTeacher = new TeacherRecords((Teacher) emp);
+                            mainPanel.add(pnlTeacher, "teacherPanel");
+                            cl.show(mainPanel, "teacherPanel");
+                        } else if (emp instanceof Counsellor) {
+                            pnlCounsellor = new CounsellorRecords((Counsellor) emp);
+                            mainPanel.add(pnlCounsellor, "counsellorPanel");
+                            cl.show(mainPanel, "counsellorPanel");
+                        } else {
+                            EmployeeRecords pnlEmployee = new EmployeeRecords(emp);
+                            mainPanel.add(pnlEmployee, "employeePanel");
+                            cl.show(mainPanel, "employeePanel");
+                        }
+                        employeeFound = true;
+                        break; // Exit the loop once the matching employee is found
+                    }
+                }
+
+                // If no matching employee is found
+                if (!employeeFound) {
+                    JOptionPane.showMessageDialog(mainFrame, "Invalid employee credentials.", "Login Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            } catch (NumberFormatException ex) {
+                // Handle the case where employee ID is not a valid integer
+                JOptionPane.showMessageDialog(mainFrame, "Please enter a valid integer for Employee ID.", "Input Error", JOptionPane.ERROR_MESSAGE);
             }
         });
+
 // Counsellor view/edit
         pnlCounsellor.btnCounsellorViewAndEditStudentRecords.addActionListener(e -> cl.show(mainPanel, "counsellorViewEditPanel"));
     }
