@@ -1,12 +1,13 @@
 package schoolify;
+
 import government.Person;
-import government.school.*;
+import government.school.students.*;
 import javax.swing.*;
 import java.awt.CardLayout;
-import government.school.students.*;
-
 
 public class SHSMRecords extends JPanel {
+
+    // GUI components
     JLabel lblSHSMName = new JLabel("Name: ");
     JLabel lblSHSMAge = new JLabel("Age: ");
     JLabel lblSHSMAverageGrade = new JLabel("Average Grade: ");
@@ -17,20 +18,31 @@ public class SHSMRecords extends JPanel {
     JLabel lblCOOP = new JLabel("CO-OP: ");
     JLabel lblCOOPPlacement = new JLabel("CO-OP Placement: ");
 
-    JTextField txtSHSMName = new JTextField();
-    JTextField txtSHSMAge = new JTextField();
-    JTextField txtSHSMAverageGrade = new JTextField();
-    JTextField txtSHSMCreditsEarned = new JTextField();
-    JTextField txtSHSMLates = new JTextField();
-    JTextField txtSHSMVolunteerHours = new JTextField();
-    JTextField txtCOOPPlacement = new JTextField();
+    public JTextField txtSHSMName = new JTextField();
+    public JTextField txtSHSMAge = new JTextField();
+    public JTextField txtSHSMAverageGrade = new JTextField();
+    public JTextField txtSHSMCreditsEarned = new JTextField();
+    public JTextField txtSHSMLates = new JTextField();
+    public JTextField txtSHSMVolunteerHours = new JTextField();
+    public JTextField txtCOOPPlacement = new JTextField();
 
-    JCheckBox chkSHSMGraduate = new JCheckBox();
-    JCheckBox chkCOOP = new JCheckBox();
+    public JCheckBox chkSHSMGraduate = new JCheckBox();
+    public JCheckBox chkCOOP = new JCheckBox();
 
+    // Constructor that accepts an SHSMStudent object as a parameter
     public SHSMRecords(SHSMStudent shsmStudent) {
+        // Initialize the GUI components
+        initializeGUI();
+
+        // Update the GUI with real data from the SHSMStudent object
+        updateGUI(shsmStudent);
+    }
+
+    // Method to initialize all GUI components
+    public void initializeGUI() {
         setLayout(null);
 
+        // Set bounds for labels and text fields
         lblSHSMName.setBounds(20, 20, 150, 50);
         txtSHSMName.setBounds(150, 35, 150, 25);
 
@@ -58,7 +70,7 @@ public class SHSMRecords extends JPanel {
         lblCOOPPlacement.setBounds(20, 420, 150, 50);
         txtCOOPPlacement.setBounds(150, 435, 150, 25);
 
-        //  non-editable
+        // Make fields non-editable
         txtSHSMName.setEditable(false);
         txtSHSMAge.setEditable(false);
         txtSHSMAverageGrade.setEditable(false);
@@ -69,18 +81,7 @@ public class SHSMRecords extends JPanel {
         chkCOOP.setEnabled(false);
         txtCOOPPlacement.setEditable(false);
 
-        // setting
-        txtSHSMName.setText(shsmStudent.getName());
-        txtSHSMAge.setText(String.valueOf(shsmStudent.getAge()));
-        txtSHSMAverageGrade.setText(String.valueOf(shsmStudent.getGPA()));
-        txtSHSMCreditsEarned.setText(String.valueOf(shsmStudent.getCreditsEarned()));
-        //txtSHSMLates.setText(String.valueOf(shsmStudent.getDaysLate()));
-        txtSHSMVolunteerHours.setText(String.valueOf(shsmStudent.getVolunteerHoursCompleted()));
-        chkSHSMGraduate.setSelected(shsmStudent.getStatus()[1]);
-        chkCOOP.setSelected(shsmStudent.hasCompletedCOOP());
-        txtCOOPPlacement.setText(shsmStudent.getCOOPPlacement());
-
-        // adding
+        // Add all components to the panel
         add(lblSHSMName);
         add(txtSHSMName);
         add(lblSHSMAge);
@@ -101,4 +102,16 @@ public class SHSMRecords extends JPanel {
         add(txtCOOPPlacement);
     }
 
+    // Method to update the GUI with real data from the SHSMStudent object
+    public void updateGUI(SHSMStudent shsmStudent) {
+        txtSHSMName.setText(shsmStudent.getName());
+        txtSHSMAge.setText(String.valueOf(shsmStudent.getAge()));
+        txtSHSMAverageGrade.setText(String.valueOf(shsmStudent.getGPA()));
+        txtSHSMCreditsEarned.setText(String.valueOf(shsmStudent.getCreditsEarned()));
+        //txtSHSMLates.setText(String.valueOf(shsmStudent.getDaysLate())); // Uncomment if necessary
+        txtSHSMVolunteerHours.setText(String.valueOf(shsmStudent.getVolunteerHoursCompleted()));
+        chkSHSMGraduate.setSelected(shsmStudent.getStatus()[1]);
+        chkCOOP.setSelected(shsmStudent.hasCompletedCOOP());
+        txtCOOPPlacement.setText(shsmStudent.getCOOPPlacement());
+    }
 }

@@ -1,4 +1,5 @@
 package schoolify;
+
 import government.Person;
 import government.school.students.*;
 import javax.swing.*;
@@ -23,7 +24,17 @@ public class StudentRecords extends JPanel {
     JTextField txtStudentVolunteerHours = new JTextField();
     JCheckBox chkStudentGraduate = new JCheckBox();
 
+    // Constructor that accepts a Student object as a parameter
     public StudentRecords(Student student) {
+        // Initialize the GUI components
+        initializeGUI();
+
+        // Update the GUI with real data from the Student object
+        updateGUI(student);
+    }
+
+    // Method to initialize all GUI components
+    public void initializeGUI() {
         setLayout(null); // layout
 
         // positioning
@@ -48,7 +59,7 @@ public class StudentRecords extends JPanel {
         lblStudentGraduate.setBounds(20, 320, 150, 50);
         chkStudentGraduate.setBounds(150, 335, 25, 25);
 
-        // uneditable
+        // Set the fields to be uneditable
         txtStudentName.setEditable(false);
         txtStudentAge.setEditable(false);
         txtStudentAverageGrade.setEditable(false);
@@ -57,16 +68,7 @@ public class StudentRecords extends JPanel {
         txtStudentVolunteerHours.setEditable(false);
         chkStudentGraduate.setEnabled(false);
 
-        // filling
-        txtStudentName.setText(student.getName());
-        txtStudentAge.setText(String.valueOf(student.getAge()));
-        txtStudentAverageGrade.setText(String.valueOf(student.getGPA()));
-        txtStudentCreditsEarned.setText(String.valueOf(student.getCreditsEarned()));
-        //txtStudentLates.setText(String.valueOf(student.getDaysLate()));
-        txtStudentVolunteerHours.setText(String.valueOf(student.getVolunteerHoursCompleted()));
-        chkStudentGraduate.setSelected(student.getStatus()[1]);
-
-        // adding
+        // Add components to the panel
         add(lblStudentName);
         add(txtStudentName);
         add(lblStudentAge);
@@ -81,5 +83,16 @@ public class StudentRecords extends JPanel {
         add(txtStudentVolunteerHours);
         add(lblStudentGraduate);
         add(chkStudentGraduate);
+    }
+
+    // Method to update the GUI with real data from the Student object
+    public void updateGUI(Student student) {
+        txtStudentName.setText(student.getName());
+        txtStudentAge.setText(String.valueOf(student.getAge()));
+        txtStudentAverageGrade.setText(String.valueOf(student.getGPA()));
+        txtStudentCreditsEarned.setText(String.valueOf(student.getCreditsEarned()));
+        //txtStudentLates.setText(String.valueOf(student.getDaysLate()));  // Uncomment if needed
+        txtStudentVolunteerHours.setText(String.valueOf(student.getVolunteerHoursCompleted()));
+        chkStudentGraduate.setSelected(student.getStatus()[1]);
     }
 }

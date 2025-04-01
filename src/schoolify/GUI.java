@@ -123,5 +123,3 @@ public class GUI {
         mainFrame.setVisible(true);
     }
 }
-
-

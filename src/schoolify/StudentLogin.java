@@ -18,6 +18,12 @@ public class StudentLogin extends JPanel {
     JButton btnStudentLogin = new JButton("Login");
 
     public StudentLogin() {
+        // Initialize the GUI components
+        initializeGUI();
+    }
+
+    // Method to initialize all GUI components
+    public void initializeGUI() {
         setLayout(null); // layout
 
         // positioning
@@ -27,11 +33,16 @@ public class StudentLogin extends JPanel {
         txtStudentPassword.setBounds(150, 85, 120, 25);
         btnStudentLogin.setBounds(60, 150, 150, 50);
 
-        // adding
+        // adding components to the panel
         add(lblStudentID);
         add(lblStudentPassword);
         add(txtStudentID);
         add(txtStudentPassword);
         add(btnStudentLogin);
+    }
+
+    // Method to update GUI (if needed for future dynamic updates)
+    public void updateGUI() {
+        // This can be used in the future to update the fields dynamically
     }
 }

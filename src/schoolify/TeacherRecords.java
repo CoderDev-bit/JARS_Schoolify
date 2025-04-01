@@ -1,14 +1,14 @@
 package schoolify;
+
 import government.Person;
 import government.school.*;
 import government.school.staff.*;
 import javax.swing.*;
 import java.awt.CardLayout;
 
-
-// teacher panel
+// Teacher panel
 public class TeacherRecords extends JPanel {
-    // labels
+    // Labels
     JLabel lblTeacherName = new JLabel("Name: ");
     JLabel lblTeacherAge = new JLabel("Age: ");
     JLabel lblTeacherDepartment = new JLabel("Department: ");
@@ -18,7 +18,7 @@ public class TeacherRecords extends JPanel {
     JLabel lblTeachingCertificate = new JLabel("Teaching Certificate: ");
     JLabel lblCoursesTaught = new JLabel("Courses Taught: ");
 
-    // fields
+    // Fields
     JTextField txtTeacherName = new JTextField();
     JTextField txtTeacherAge = new JTextField();
     JTextField txtTeacherDepartment = new JTextField();
@@ -28,11 +28,20 @@ public class TeacherRecords extends JPanel {
     JTextField txtTeachingCertificate = new JTextField();
     JTextField txtCoursesTaught = new JTextField();
 
-    // constructor
+    // Constructor that accepts a Teacher object as a parameter
     public TeacherRecords(Teacher teacher) {
-        setLayout(null); // layout
+        // Initialize the GUI components
+        initializeGUI();
 
-        // positioning
+        // Update the GUI with real data from the Teacher object
+        updateGUI(teacher);
+    }
+
+    // Method to initialize all GUI components
+    public void initializeGUI() {
+        setLayout(null); // Layout
+
+        // Positioning
         lblTeacherName.setBounds(20, 20, 150, 50);
         txtTeacherName.setBounds(150, 35, 150, 25);
 
@@ -57,7 +66,7 @@ public class TeacherRecords extends JPanel {
         lblCoursesTaught.setBounds(20, 370, 150, 50);
         txtCoursesTaught.setBounds(150, 385, 150, 25);
 
-        // Uneditable
+        // Set fields to be uneditable
         txtTeacherName.setEditable(false);
         txtTeacherAge.setEditable(false);
         txtTeacherDepartment.setEditable(false);
@@ -67,17 +76,7 @@ public class TeacherRecords extends JPanel {
         txtTeachingCertificate.setEditable(false);
         txtCoursesTaught.setEditable(false);
 
-        // filling
-        txtTeacherName.setText(teacher.getName());
-        txtTeacherAge.setText(String.valueOf(teacher.getAge()));
-        txtTeacherDepartment.setText(teacher.getDepartment());
-        txtTeacherShiftInterval.setText(String.join(" - ", teacher.getShiftInterval()));
-        txtTeacherYearsEmployed.setText(String.valueOf(teacher.getYearsEmployed()));
-        txtTeacherAnnualSalary.setText(String.valueOf(teacher.getAnnualSalary()));
-        txtTeachingCertificate.setText(teacher.getTeachingCertification());
-        //txtCoursesTaught.setText(String.join(" - ", teacher.getSubjectsTaught()));
-
-        // adding
+        // Add components to the panel
         add(lblTeacherName);
         add(txtTeacherName);
         add(lblTeacherAge);
@@ -94,5 +93,18 @@ public class TeacherRecords extends JPanel {
         add(txtTeachingCertificate);
         add(lblCoursesTaught);
         add(txtCoursesTaught);
+    }
+
+    // Method to update the GUI with real data from the Teacher object
+    public void updateGUI(Teacher teacher) {
+        txtTeacherName.setText(teacher.getName());
+        txtTeacherAge.setText(String.valueOf(teacher.getAge()));
+        txtTeacherDepartment.setText(teacher.getDepartment());
+        txtTeacherShiftInterval.setText(String.join(" - ", teacher.getShiftInterval()));
+        txtTeacherYearsEmployed.setText(String.valueOf(teacher.getYearsEmployed()));
+        txtTeacherAnnualSalary.setText(String.valueOf(teacher.getAnnualSalary()));
+        txtTeachingCertificate.setText(teacher.getTeachingCertification());
+        // Uncomment the following line if courses taught are available
+        // txtCoursesTaught.setText(String.join(" - ", teacher.getSubjectsTaught()));
     }
 }
