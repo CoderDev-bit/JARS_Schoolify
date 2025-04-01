@@ -23,7 +23,7 @@ public abstract class Course {
 
 
     // Getters
-    public double getCourseGrade() {
+    public int getCourseGrade() {
         return intCourseGrade;
     }
 

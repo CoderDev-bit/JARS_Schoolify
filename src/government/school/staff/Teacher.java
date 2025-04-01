@@ -9,13 +9,13 @@ public class Teacher extends Employee {
     // Fields
     private String strTeachingCertification;
     private ArrayList<Course> subjectsTaught;
-    private Timetable timetable;
+    private Timetable timetable = new Timetable();
 
     // Constructor for Teacher Class
     public Teacher(int intAge, String strName, String strPassword, String strDepartment, String[] shiftInterval,
                    int intYearsEmployed, double dblAnnualSalary, boolean[] blnStatus,
                    String strTeachingCertification, ArrayList<Course> subjectsTaught, Timetable
-                           timetable){
+                           timetable) throws CloneNotSupportedException {
         super(intAge, strName, strPassword, strDepartment, shiftInterval, intYearsEmployed, dblAnnualSalary, blnStatus);
         setTeachingCertification(strTeachingCertification);
         setSubjectsTaught(subjectsTaught);
@@ -41,9 +41,9 @@ public class Teacher extends Employee {
         return this.subjectsTaught; /******************************/
     }
 
-    public Timetable getTimetable(){
+    public Timetable getTimetable() throws CloneNotSupportedException {
         // Cloning the returned object to prevent unintended modification since it is a reference to the original
-        return this.timetable.clone();
+        return this.timetable.elevatedClone();
     }
 
     // Setter Methods
@@ -56,10 +56,10 @@ public class Teacher extends Employee {
     }
 
 
-    public void setTimetable(Timetable timetable){
+    public void setTimetable(Timetable timetable) throws CloneNotSupportedException {
         if (timetable != null && timetable.getTt().length == 4){
             // Cloning the assigned object to prevent unintended modification since it is a reference to the original
-            this.timetable = timetable.clone();
+            this.timetable = timetable.elevatedClone();
         }
     }
 

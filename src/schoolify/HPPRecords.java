@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.CardLayout;
 
 public class HPPRecords extends JPanel {
+
+    // GUI components
     JLabel lblHPPName = new JLabel("Name: ");
     JLabel lblHPPAge = new JLabel("Age: ");
     JLabel lblHPPAverageGrade = new JLabel("Average Grade: ");
@@ -16,21 +18,32 @@ public class HPPRecords extends JPanel {
     JLabel lblTeam = new JLabel("Team: ");
     JLabel lblPosition = new JLabel("Position: ");
 
-    JTextField txtHPPName = new JTextField();
-    JTextField txtHPPAge = new JTextField();
-    JTextField txtHPPAverageGrade = new JTextField();
-    JTextField txtHPPCreditsEarned = new JTextField();
-    JTextField txtHPPLates = new JTextField();
-    JTextField txtHPPVolunteerHours = new JTextField();
-    JTextField txtSport = new JTextField();
-    JTextField txtTeam = new JTextField();
-    JTextField txtPosition = new JTextField();
+    public JTextField txtHPPName = new JTextField();
+    public JTextField txtHPPAge = new JTextField();
+    public JTextField txtHPPAverageGrade = new JTextField();
+    public JTextField txtHPPCreditsEarned = new JTextField();
+    public JTextField txtHPPLates = new JTextField();
+    public JTextField txtHPPVolunteerHours = new JTextField();
+    public JTextField txtSport = new JTextField();
+    public JTextField txtTeam = new JTextField();
+    public JTextField txtPosition = new JTextField();
 
-    JCheckBox chkHPPGraduate = new JCheckBox();
+    public JCheckBox chkHPPGraduate = new JCheckBox();
 
+    // Constructor that accepts an HPPStudent object as a parameter
     public HPPRecords(HPPStudent hppStudent) {
+        // Initialize the GUI components
+        initializeGUI();
+
+        // Update the GUI with real data from the HPPStudent object
+        updateGUI(hppStudent);
+    }
+
+    // Method to initialize all GUI components
+    public void initializeGUI() {
         setLayout(null);
 
+        // Set bounds for labels and text fields
         lblHPPName.setBounds(20, 20, 150, 50);
         txtHPPName.setBounds(150, 35, 150, 25);
 
@@ -61,7 +74,7 @@ public class HPPRecords extends JPanel {
         lblPosition.setBounds(20, 470, 150, 50);
         txtPosition.setBounds(150, 485, 150, 25);
 
-        // Disable
+        // Disable editing
         txtHPPName.setEditable(false);
         txtHPPAge.setEditable(false);
         txtHPPAverageGrade.setEditable(false);
@@ -73,19 +86,7 @@ public class HPPRecords extends JPanel {
         txtTeam.setEditable(false);
         txtPosition.setEditable(false);
 
-        // Seting
-        txtHPPName.setText(hppStudent.getName());
-        txtHPPAge.setText(String.valueOf(hppStudent.getAge()));
-        txtHPPAverageGrade.setText(String.valueOf(hppStudent.getGPA()));
-        txtHPPCreditsEarned.setText(String.valueOf(hppStudent.getCreditsEarned()));
-        //txtHPPLates.setText(String.valueOf(hppStudent.getDaysLate()));
-        txtHPPVolunteerHours.setText(String.valueOf(hppStudent.getVolunteerHoursCompleted()));
-        chkHPPGraduate.setSelected(hppStudent.getStatus()[1]);
-        txtSport.setText(hppStudent.getSport());
-        txtTeam.setText(hppStudent.getTeam());
-        txtPosition.setText(hppStudent.getPosition());
-
-        // Adding
+        // Add components to the panel
         add(lblHPPName);
         add(txtHPPName);
         add(lblHPPAge);
@@ -108,5 +109,17 @@ public class HPPRecords extends JPanel {
         add(txtPosition);
     }
 
-
+    // Method to update the GUI with real data from the HPPStudent object
+    public void updateGUI(HPPStudent hppStudent) {
+        txtHPPName.setText(hppStudent.getName());
+        txtHPPAge.setText(String.valueOf(hppStudent.getAge()));
+        txtHPPAverageGrade.setText(String.valueOf(hppStudent.getGPA()));
+        txtHPPCreditsEarned.setText(String.valueOf(hppStudent.getCreditsEarned()));
+        //txtHPPLates.setText(String.valueOf(hppStudent.getDaysLate()));  // Uncomment this line if needed
+        txtHPPVolunteerHours.setText(String.valueOf(hppStudent.getVolunteerHoursCompleted()));
+        chkHPPGraduate.setSelected(hppStudent.getStatus()[1]);
+        txtSport.setText(hppStudent.getSport());
+        txtTeam.setText(hppStudent.getTeam());
+        txtPosition.setText(hppStudent.getPosition());
+    }
 }

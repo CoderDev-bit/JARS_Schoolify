@@ -157,4 +157,42 @@ public class CourseSection extends Course {
         return studentsEnrolled.remove(student);
     }
 
+    @Override
+    public CourseSection clone() {
+        try {
+            CourseSection cloned = new CourseSection(
+                    this.COURSE_CODE,
+                    super.getCourseGrade(),
+                    this.COURSE_MAX_CAPACITY,
+                    this.COURSE_MIN_CAPACITY,
+                    this.intSectionNumber,
+                    this.courseTeacher // Shared reference (modify if deep copy needed)
+            );
+
+            // Manually copy key-value pairs from ArrayMap
+            cloned.grades = new ArrayMap<>();
+            cloned.absences = new ArrayMap<>();
+            cloned.lates = new ArrayMap<>();
+
+            copyArrayMap(this.grades, cloned.grades);
+            copyArrayMap(this.absences, cloned.absences);
+            copyArrayMap(this.lates, cloned.lates);
+
+            // Shallow copy students (modify if deep clone needed)
+            cloned.studentsEnrolled = new ArrayList<>(this.studentsEnrolled);
+
+            return cloned;
+        } catch (Exception e) {
+            throw new RuntimeException("Cloning failed: " + e.getMessage());
+        }
+    }
+
+    // Helper method to manually copy `ArrayMap` contents
+    private <K, V> void copyArrayMap(ArrayMap<K, V> original, ArrayMap<K, V> copy) {
+        for (ArrayMap.Entry<K, V> entry : original.keyValuePairs()) {
+            copy.put(entry.key, entry.value);
+        }
+    }
+
+
 }

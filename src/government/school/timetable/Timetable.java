@@ -4,7 +4,7 @@ import government.school.students.Student;
 
 public class Timetable {
 
-    private CourseSection[] tt;
+    private CourseSection[] tt = new CourseSection[4];
     private int MAX_COURSES = 4;
 
     public CourseSection[] getTt() {
@@ -59,9 +59,24 @@ public class Timetable {
         return -1;
     }
 
-    @Override
-    public Timetable clone() {
-        return this.clone();
+
+    public Timetable elevatedClone() {
+        try {
+            Timetable clonedTimetable = new Timetable();
+
+            // Deep clone the course sections array
+            clonedTimetable.tt = new CourseSection[MAX_COURSES];
+            for (int i = 0; i < MAX_COURSES; i++) {
+                if (this.tt[i] != null) {
+                    clonedTimetable.tt[i] = this.tt[i].clone(); // Assuming CourseSection has a proper clone method
+                }
+            }
+
+            return clonedTimetable;
+        } catch (Exception e) {
+            throw new RuntimeException("Cloning failed: " + e.getMessage());
+        }
     }
+
 
 }

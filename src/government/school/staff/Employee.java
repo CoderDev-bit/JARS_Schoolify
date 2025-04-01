@@ -18,7 +18,7 @@ public abstract class Employee extends Person implements Cloneable {
 
     // Static Fields
     private final static String[] departments = {"Math", "Science", "Technology", "Art", "Business", "Physical Education", "Guidance"};
-    private static ArrayList<Employee> employees;
+    private static ArrayList<Employee> employees = new ArrayList<Employee>();
 
 
     // Constructor for Employee Class
@@ -119,11 +119,19 @@ public abstract class Employee extends Person implements Cloneable {
     }
 
     public void setStatus(boolean[] blnStatus){
-        if (blnStatus != null && blnStatus.length == 3 && validateStatus(blnStatus)){
-            this.blnStatus = blnStatus.clone();
-        } else {
-            throw new IllegalArgumentException("Status cannot be null.");
+        if (blnStatus == null) {
+            throw new NullPointerException("Status array cannot be null.");
         }
+        if (blnStatus.length != 3) {
+            throw new IllegalArgumentException("Status array must have exactly 3 elements.");
+        }
+        if (!validateStatus(blnStatus)) {
+            throw new IllegalStateException("Status array must have exactly one 'true' value.");
+        }
+
+    // If all checks pass, assign the cloned array
+        this.blnStatus = blnStatus.clone();
+
     }
 
     // Helper Methods
@@ -145,13 +153,12 @@ public abstract class Employee extends Person implements Cloneable {
     private boolean validateStatus(boolean[] blnStatus){
         int trueCount = 0;
 
-        if (blnStatus != null && blnStatus.length == 3){
-            for (boolean element: blnStatus){
+        for (boolean element: blnStatus){
                 if (element) trueCount++;
-            }
         }
 
-        return (trueCount == 1);
+
+        return (trueCount < 2); // fired, vacation, retired (they can only be one or none) *fixed it
     }
 
     // Updated getEmployees() method

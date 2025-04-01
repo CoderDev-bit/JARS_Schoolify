@@ -1,9 +1,11 @@
 package government.school.util;
 
+import java.util.ArrayList;
+
 public class ArrayMap<K, V> {
-    private static class Entry<K, V> {
-        K key;
-        V value;
+    public static class Entry<K, V> {
+        public K key;
+        public V value;
         // No "next" pointer here
 
         Entry(K key, V value) {
@@ -12,7 +14,7 @@ public class ArrayMap<K, V> {
         }
     }
 
-    private Entry<K, V>[] table;
+    public Entry<K, V>[] table;
     private int size;
     private final int INITIAL_CAPACITY = 10;
 
@@ -21,6 +23,17 @@ public class ArrayMap<K, V> {
         table = new Entry[INITIAL_CAPACITY];
         size = 0;
     }
+
+    public ArrayList<Entry<K, V>> keyValuePairs() {
+        ArrayList<Entry<K, V>> list = new ArrayList<>();
+        for (Entry<K, V> entry : table) {
+            if (entry != null) {
+                list.add(entry);
+            }
+        }
+        return list;
+    }
+
 
     private int hash(K key) {
         return (key.hashCode() & 0x7FFFFFFF) % table.length; // Ensure non-negative index

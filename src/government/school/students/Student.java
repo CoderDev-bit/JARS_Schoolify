@@ -70,8 +70,8 @@ public class Student extends Person implements Serializable {
     }
 
 
-    public void setTimetable(Timetable timetable) {
-        this.timetable = timetable.clone();
+    public void setTimetable(Timetable timetable) throws CloneNotSupportedException {
+        this.timetable = timetable.elevatedClone();
     }
 
     public void setStatus(boolean[] status) {
@@ -100,8 +100,8 @@ public class Student extends Person implements Serializable {
         return this.dblGPA;
     }
 
-    public Timetable getTimetable() {
-        return this.timetable.clone();
+    public Timetable getTimetable() throws CloneNotSupportedException {
+        return this.timetable.elevatedClone();
     }
 
     public boolean[] getStatus() {
